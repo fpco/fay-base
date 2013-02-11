@@ -23,6 +23,7 @@ module Prelude
   ,Maybe(..)
   ,maybe
   -- Monads
+  ,Base.Monad
   ,(>>=)
   ,(>>)
   ,return
