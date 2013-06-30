@@ -2,6 +2,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 {-# OPTIONS -w #-}
 
 module Prelude
@@ -255,13 +256,12 @@ type Char = Base.Char
 
 -- | Maybe type.
 data Maybe a = Just a | Nothing
-instance Base.Read a => Base.Read (Maybe a)
-instance Base.Show a => Base.Show (Maybe a)
-instance Typeable a => Typeable (Maybe a)
-instance Data a => Data (Maybe a)
+  deriving (Base.Read, Base.Show, Data, Typeable, Eq)
 
 -- | Either type.
 data Either a b = Left a | Right b
+  deriving (Base.Read, Base.Show, Data, Typeable, Eq)
+
 
 maybe :: t -> (t1 -> t) -> Maybe t1 -> t
 maybe m _ Nothing = m
@@ -271,9 +271,7 @@ maybe _ f (Just x) = f x
 -- Rational
 
 data Rational = Ratio Int Int
-instance Base.Show Rational
-instance Data Rational
-instance Typeable Rational
+  deriving (Base.Read, Base.Show, Data, Typeable, Eq)
 
 --------------------------------------------------------------------------------
 -- Monads
@@ -331,6 +329,7 @@ instance Num Double
 
 -- An ordering.
 data Ordering = GT | LT | EQ
+  deriving (Base.Read, Base.Show, Data, Typeable, Eq)
 
 class (Eq a,Base.Ord a) => Ord a where
   (<)     :: a -> a -> Bool
